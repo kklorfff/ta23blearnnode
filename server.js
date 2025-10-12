@@ -1,42 +1,20 @@
-import express from 'express'
-import bodyParses from 'body-parser'
-const app = express()
-const port = 3000
+import { WebSocketServer } from 'ws';
 
-let messages = []
+const wss = new WebSocketServer({ port: 8080 });
+let messages = [];
+wss.on('connection', function connection(ws) {
+  ws.on('error', console.error);
 
-const sleep = (delay) => new Promise((resolve) => setTimeout(() => {}, delay))
+  ws.on('message', function message(data) {
+    data = JSON.parse(data);
+    console.log(data);
+    messages.push(data);
+    wss.clients.forEach(client => {
+        if(client.readyState === client.OPEN) {
+            client.send(JSON.stringify(data));
+        }
+    });
+  });
 
-app.use(bodyParses.json())
-
-app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', '*')
-    res.set('Access-Control-Allow-Headers', 'Content-Type')
-    next()
-})
-
-app.get('/messages', (req, res) => {
-    let filteredMessages = messages.filter(msg => msg.date > new Date(req.query.date ?? null))
-    res.json(filteredMessages)
-})
-
-app.get('/messages/longpool', (req, res) => {
-    let filteredMessages = []
-    do {
-        await sleep(1000);
-        filteredMessages = messages.filter(msg => msg.date > new Date(req.query.date ?? null))
-    } while(filteredMessages.length === 0);
-    res.json(filteredMessages)
-})
-
-app.post('/messages', (req, res) => {
-    messages.push({ 
-        message: req.body.message,
-        date: new Date()
-    })
-    res.json(req.body)
-})
-
-app.listen(port, () => {
-    console.log(`Listening to http://localhost:${port}`)
-})
+  ws.send(JSON.stringify({type: 'messages', messages}));
+});

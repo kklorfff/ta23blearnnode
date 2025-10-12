@@ -38,7 +38,6 @@ let buyUpgrade = (key) => {
     cookies.value -= building.price
 }
 
-
 function buyBuilding(building) {
     cookies.value -= building.price;
     building.price += Math.ceil(building.price / 100 * 15);
@@ -82,40 +81,6 @@ setInterval(() => {
         <div class="column is-4 has-background-link">
             asdas
         </div>
-        <!-- <div class="column is-3 has-background-warning">
-            <div class="columns is-flex-direction-column" style="height: 100%;">
-                <div class="columns column is-flex-grow-0 ">
-                    <div class="column" v-for="upgrade in upgrades">
-                        <div class="dropdown is-hoverable">
-                            <div class="dropdown-trigger">
-                                <button @click="buyUpgrade(upgrade.key)" class="button has-background-primary is-size-3"
-                                    aria-haspopup="true" aria-controls="dropdown-menu4" style="height: 60px; width: 60px;"
-                                    v-if="!upgrade.isBought">
-                                    {{ upgrade.emoji }}
-                                </button>
-                            </div>
-                            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
-                                <div class="dropdown-content">
-                                    <div class="dropdown-item">
-                                        <p class="mb-1 has-text-weight-medium">{{ upgrade.name }}</p>
-                                        <p>{{ upgrade.description }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <button v-for="building in buildings" :disabled="cookies < building.price"
-                        @click="buyBuilding(building)" class="button is-primary is-medium is-fullwidth mb-4">
-                        <div class=".container.is-fullhd is-justify-content-space-between">
-                            <p>{{ building.name }} 🍪{{ building.price }}</p>
-                            <p class="has-text-light">{{ building.count }}</p>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div> -->
         <div class="column is-3 has-background-warning">
             <div class="columns is-flex-direction-column" style="height: 100%;">
                 <div class="column is-flex-grow-0">

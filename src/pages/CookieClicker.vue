@@ -24,6 +24,21 @@ const buildings = ref([
     { name: 'Dragclick', price: 15000, cps: 170, count: 0 },
 ]);
 
+const upgrades = ref([
+    { name: 'Double click', description: 'The cursor is twice as efficient', price: 100, key: 'Cursor', emoji: '👆', isBought: false },
+    { name: 'Forwards from grandma', description: 'Grandmas is twice as efficient', price: 500, key: 'Grandma', emoji: '👵', isBought: false },
+    { name: 'Texas farmer', description: 'Farms works twice as efficient', price: 1500, key: 'Farm', emoji: '🧺', isBought: false },
+])
+
+let buyUpgrade = (key) => {
+    let building = buildings.value.find(m => m.name === key)
+    building.count *= 2
+    let upgrade = upgrades.value.find(m => m.key === key)
+    upgrade.isBought = true
+    cookies.value -= building.price
+}
+
+
 function buyBuilding(building) {
     cookies.value -= building.price;
     building.price += Math.ceil(building.price / 100 * 15);
@@ -64,17 +79,79 @@ setInterval(() => {
                     src="https://sweetlorens.com/cdn/shop/products/Copy-of-Chocolate-Chunk-Full-Cookie-transparent-background.png?v=1687811511" />
             </figure>
         </div>
-        <!-- <div class="column is-6 has-background-link">
+        <div class="column is-4 has-background-link">
             asdas
+        </div>
+        <!-- <div class="column is-3 has-background-warning">
+            <div class="columns is-flex-direction-column" style="height: 100%;">
+                <div class="columns column is-flex-grow-0 ">
+                    <div class="column" v-for="upgrade in upgrades">
+                        <div class="dropdown is-hoverable">
+                            <div class="dropdown-trigger">
+                                <button @click="buyUpgrade(upgrade.key)" class="button has-background-primary is-size-3"
+                                    aria-haspopup="true" aria-controls="dropdown-menu4" style="height: 60px; width: 60px;"
+                                    v-if="!upgrade.isBought">
+                                    {{ upgrade.emoji }}
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                                <div class="dropdown-content">
+                                    <div class="dropdown-item">
+                                        <p class="mb-1 has-text-weight-medium">{{ upgrade.name }}</p>
+                                        <p>{{ upgrade.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <button v-for="building in buildings" :disabled="cookies < building.price"
+                        @click="buyBuilding(building)" class="button is-primary is-medium is-fullwidth mb-4">
+                        <div class=".container.is-fullhd is-justify-content-space-between">
+                            <p>{{ building.name }} 🍪{{ building.price }}</p>
+                            <p class="has-text-light">{{ building.count }}</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
         </div> -->
         <div class="column is-3 has-background-warning">
-            <button v-for="building in buildings" :disabled="cookies < building.price" @click="buyBuilding(building)"
-                class="button is-primary is-large is-fullwidth mb-4">
-                <div class=".container.is-fullhd is-justify-content-space-between">
-                    <p>{{ building.name }} 🍪{{ building.price }}</p>
-                    <p class="has-text-light">{{ building.count }}</p>
+            <div class="columns is-flex-direction-column" style="height: 100%;">
+                <div class="column is-flex-grow-0">
+                    <div class="dropdown is-hoverable mr-5" v-for="upgrade in upgrades">
+                        <div class="dropdown-trigger">
+                            <button @click="buyUpgrade(upgrade.key)" class="button has-background-primary is-size-3"
+                                aria-haspopup="true" aria-controls="dropdown-menu4" style="height: 60px; width: 60px;"
+                                v-if="!upgrade.isBought"
+                                :disabled="cookies < upgrade.price"
+                                >
+                                {{ upgrade.emoji }}
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                            <div class="dropdown-content">
+                                <div class="dropdown-item">
+                                    <div class="is-flex is-flex-direction-row mb-1 ">
+                                        <p class="mr-1 has-text-weight-medium">{{ upgrade.name }}</p>
+                                        <p class="has-text-weight-bold">{{ upgrade.price }}🍪</p>
+                                    </div>
+                                    <p>{{ upgrade.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </button>
+                <div class="column">
+                    <button v-for="building in buildings" :disabled="cookies < building.price"
+                        @click="buyBuilding(building)" class="button is-primary is-medium is-fullwidth mb-4">
+                        <div class=".container.is-fullhd is-justify-content-space-between">
+                            <p>{{ building.name }} 🍪{{ building.price }}</p>
+                            <p class="has-text-light">{{ building.count }}</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <Modal :active="modalActive" @close="modalActive = false">

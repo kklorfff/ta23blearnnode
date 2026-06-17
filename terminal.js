@@ -10,5 +10,3 @@ setInterval(() => {
     date = new Date().toTimeString().substring(0,8);
     write(date);
 }, 1000);
-
-

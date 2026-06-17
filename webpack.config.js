@@ -1,7 +1,8 @@
 import path from "path";
-import HtmlWebpackPlugin from "html-webpack-plugin";
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { VueLoaderPlugin } from 'vue-loader';
 import webpack from 'webpack';
+
 
 const __filename = import.meta.filename;
 const __dirname = import.meta.dirname;

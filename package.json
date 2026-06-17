@@ -2,13 +2,13 @@
   "name": "learnnode",
   "version": "1.0.0",
   "description": "",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "start": "webpack serve --mode development",
-    "deploy": "npm run build && surge ./dist kaspariscool.surge.sh",
-    "express": "nodemon server.js"
+    "deploy": "npm run build && surge ./dist monkeyt23b"
   },
   "keywords": [],
   "author": "",
@@ -16,25 +16,29 @@
   "devDependencies": {
     "bulma": "^1.0.2",
     "css-loader": "^7.1.2",
-    "html-webpack-plugin": "^5.6.2",
-    "nodemon": "^3.1.9",
-    "sass": "^1.80.3",
-    "sass-loader": "^16.0.2",
+    "html-loader": "^5.1.0",
+    "sass": "^1.80.6",
+    "sass-loader": "^16.0.3",
     "simple-nunjucks-loader": "^3.2.0",
     "style-loader": "^4.0.0",
     "surge": "^0.24.6",
     "vue": "^3.5.13",
     "vue-loader": "^17.4.2",
     "vue-template-compiler": "^2.7.16",
-    "webpack": "^5.95.0",
+    "webpack": "^5.99.6",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
   },
   "dependencies": {
-    "axios": "^1.7.9",
+    "axios": "^1.9.0",
     "body-parser": "^2.2.0",
+    "cheerio": "^1.0.0",
     "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "html-webpack-plugin": "^5.6.3",
     "leaflet": "^1.9.4",
+    "md5": "^2.3.0",
+    "puppeteer": "^24.9.0",
     "vue-router": "^4.5.0",
     "ws": "^8.18.1"
   }
